@@ -9,11 +9,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import statistic.averageTask;
 import task.FTodoTask;
 import task.taskDao;
 
@@ -28,6 +30,10 @@ public class TasksController {
 
     private int userId;
     taskDao taskDao = task.taskDao.getInstance();
+    private double avg;
+    private int avgTasks;
+    private int days;
+
     @FXML
     private ResourceBundle resources;
 
@@ -42,6 +48,9 @@ public class TasksController {
 
     @FXML
     private Button deleteButton;
+
+    @FXML
+    private Label todaysTasks;
 
     @FXML
     private TableView<FTodoTask> table;
@@ -64,7 +73,12 @@ public class TasksController {
     void initialize() {
         Platform.runLater(() -> {
             List<FTodoTask> tasks = taskDao.findUsersTasks(String.valueOf(userId));
-
+            List<FTodoTask> avgTasksL= taskDao.findAll();
+          days = taskDao.days(String.valueOf(userId));
+            avgTasks=avgTasksL.size();
+            System.out.println(days);
+            System.out.println(avgTasks);
+            todaysTasks.setText("Todays Tasks");
             name.setCellValueFactory(new PropertyValueFactory<>("name"));
             description.setCellValueFactory(new PropertyValueFactory<>("description"));
             created.setCellValueFactory(new PropertyValueFactory<>("created"));
@@ -72,7 +86,12 @@ public class TasksController {
             ObservableList<FTodoTask> observableList = FXCollections.observableArrayList();
             observableList.addAll(tasks);
             table.setItems(observableList);
+
+             avg= averageTask.averageTasks(avgTasks,days);
+            System.out.println("avg"+avg);
+
         });
+
 
 
     }

@@ -47,7 +47,7 @@ public class FTodoTask {
     @Column
     private String description;
 
-    
+
 
 
 }

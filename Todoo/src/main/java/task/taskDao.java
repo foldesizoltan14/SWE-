@@ -24,13 +24,10 @@ public class taskDao extends GenericJpaDao<FTodoTask> {
         return instance;
     }
 
-    public List<FTodoTask> findAll() {
-        return entityManager.createQuery("SELECT r FROM FTodoTask r",FTodoTask.class)
-       .getResultList();
-    }
 
     /**
      * Returns the list of every tasks of a person with the id of {@code n} on that day
+     *
      * @param id the users id
      * @return every task on that day with the id
      */
@@ -39,14 +36,15 @@ public class taskDao extends GenericJpaDao<FTodoTask> {
     public List<FTodoTask> findUsersTasks(String id) {
 
 
-     return entityManager.createQuery("SELECT r FROM FTodoTask r WHERE r.userId = :id AND r.created = CURRENT_DATE ", FTodoTask.class)
-        .setParameter("id", id).getResultList();
-
+        return entityManager.createQuery("SELECT r FROM FTodoTask r WHERE r.userId = :id AND r.created = CURRENT_DATE ", FTodoTask.class)
+                .setParameter("id", id).getResultList();
 
 
     }
+
     /**
      * Returns the list of every tasks of a person with the id of {@code n} on every previous  days
+     *
      * @param id the users id
      * @return every task with the id on every previous day
      */
@@ -57,16 +55,17 @@ public class taskDao extends GenericJpaDao<FTodoTask> {
                 .setParameter("id", id).getResultList();
 
 
-
     }
 
+    public int days(String id) {
+
+
+        return entityManager.createQuery("SELECT COUNT(*) FROM FTodoTask r WHERE r.userId = :id GROUP BY r.created,r.userId,r.id ", Long.class)
+                .setParameter("id", id).getResultList().size();
 
 
 
 
 
-
-
-
-
+    }
 }
