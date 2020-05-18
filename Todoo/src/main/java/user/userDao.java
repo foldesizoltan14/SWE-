@@ -6,6 +6,9 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * DAO class for {@link FTodoUser} entity
+ */
 public class userDao extends GenericJpaDao<FTodoUser> {
 
 
@@ -21,11 +24,23 @@ public class userDao extends GenericJpaDao<FTodoUser> {
      return instance;
  }
 
+    /**
+     * Find a user by name
+     * @param name the users name
+     * @return the user
+     */
+
     public List<FTodoUser> findUser(String name) {
         return entityManager.createQuery("SELECT r FROM FTodoUser r WHERE r.name = name ", FTodoUser.class)
                 .getResultList();
     }
 
+
+    /**
+     * Finds the user by name if its already in tha database
+     * @param name the users name
+     * @return The user we are looking for, if he/she is  already int the database or null if he/she isn't
+     */
     public FTodoUser findUserId(String name) {
 
 

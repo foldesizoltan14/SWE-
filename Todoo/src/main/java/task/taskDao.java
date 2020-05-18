@@ -5,6 +5,10 @@ import util.jpa.GenericJpaDao;
 import javax.persistence.Persistence;
 import java.util.List;
 
+/**
+ * DAO class for the {@link FTodoTask} entity
+ */
+
 public class taskDao extends GenericJpaDao<FTodoTask> {
     private static taskDao instance;
 
@@ -25,6 +29,13 @@ public class taskDao extends GenericJpaDao<FTodoTask> {
        .getResultList();
     }
 
+    /**
+     * Returns the list of every tasks of a person with the id of {@code n} on that day
+     * @param id the users id
+     * @return every task on that day with the id
+     */
+
+
     public List<FTodoTask> findUsersTasks(String id) {
 
 
@@ -34,6 +45,11 @@ public class taskDao extends GenericJpaDao<FTodoTask> {
 
 
     }
+    /**
+     * Returns the list of every tasks of a person with the id of {@code n} on every previous  days
+     * @param id the users id
+     * @return every task with the id on every previous day
+     */
     public List<FTodoTask> findUsersPreviousTasks(String id) {
 
 

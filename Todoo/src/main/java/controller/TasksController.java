@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import task.FTodoTask;
 import task.taskDao;
 
@@ -22,6 +23,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+@Slf4j
 public class TasksController {
 
     private int userId;
@@ -61,16 +63,6 @@ public class TasksController {
     @FXML
     void initialize() {
         Platform.runLater(() -> {
-            ;
-
-
-            //String s = String.valueOf(userId);
-            //System.out.println(userId);
-
-            // List<FTodoTask> tasks = taskDao.findUsersTasks(s);
-            //System.out.println("userId as string:"+String.valueOf(userId));
-
-
             List<FTodoTask> tasks = taskDao.findUsersTasks(String.valueOf(userId));
 
             name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -95,6 +87,8 @@ public class TasksController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+
+        log.info("Loading AddTask scene");
     }
 
     public void previousTask(javafx.event.ActionEvent actionEvent) throws IOException {
@@ -104,7 +98,7 @@ public class TasksController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
-
+        log.info("Loading PreviousTasks scene");
     }
 
     public void deleteTask(javafx.event.ActionEvent actionEvent) throws IOException {
@@ -112,6 +106,7 @@ public class TasksController {
             FTodoTask selectedItem = table.getSelectionModel().getSelectedItem();
             table.getItems().remove(selectedItem);
             taskDao.remove(selectedItem);
+            log.info("Task deleted");
 
         });
     }

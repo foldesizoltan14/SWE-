@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import task.FTodoTask;
 import task.taskDao;
 
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+@Slf4j
 public class addTaskController {
 
     private taskDao taskDao;
@@ -63,6 +65,8 @@ public class addTaskController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+
+        log.info("Task added,Loading Tasks scene");
     }
 
 }

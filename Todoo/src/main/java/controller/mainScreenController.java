@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import user.FTodoUser;
 import user.userDao;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@Slf4j
 public class mainScreenController {
 
     private userDao userDao;
@@ -69,6 +71,8 @@ if (userDao.findUser(nameText.getText())!=null && userDao.findUserId(nameText.ge
     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
     stage.setScene(new Scene(root));
     stage.show();
+    log.info("User was already in the database and her/his name is,",nameText.getText());
+    log.info("Loading Tasks scene");
 }
 
  if ((userDao.findUser(nameText.getText())!=null && userDao.findUserId(nameText.getText())==null)){
@@ -84,6 +88,8 @@ if (userDao.findUser(nameText.getText())!=null && userDao.findUserId(nameText.ge
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+     log.info("User wasn't  in the database and he/she was created and her/his  name is,",nameText.getText());
+     log.info("Loading Tasks scene");
         }
     }
 }
